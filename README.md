@@ -1,2 +1,0 @@
-# Ansible_HW1_TrailBlazers
-Ansible Assignment_1 Enterprise_software_platform
