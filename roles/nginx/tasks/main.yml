@@ -1,0 +1,46 @@
+#installing nginx web server on pi
+---
+- name: Install Nginx server
+  apt: name=nginx state=latest
+
+- name: Start Nginx
+  service: 
+    name: nginx
+    state: started
+
+- name: setup hello_world.html
+  template: 
+    src={{ item }}.html dest=/var/www/html/
+  with_items:
+    - hello_world
+
+- name: Creating a hello_world.conf file under site-available
+  template:
+    src={{ item }} dest=/etc/nginx/sites-available
+  with_items:
+    - helloWorld
+    - helloWorld_test
+
+- name: Create a symbolic link
+  file:
+    src: /etc/nginx/sites-available/helloWorld
+    dest: /etc/nginx/sites-enabled/helloWorld
+    state: link
+
+- name: Create a symbolic for helloWorld_test
+  file:
+    src: /etc/nginx/sites-available/helloWorld_test
+    dest: /etc/nginx/sites-enabled/helloWorld_test
+    state: link
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+
+    #- name: Stop Nginx
+    #  service:
+    #    name: nginx
+    #    state: stopped
+

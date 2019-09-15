@@ -1,0 +1,9 @@
+---
+- name: nginx config
+  hosts: local
+  connection: local
+  become: true
+  gather_facts: false
+  pre_tasks:
+  roles:
+   - nginx
